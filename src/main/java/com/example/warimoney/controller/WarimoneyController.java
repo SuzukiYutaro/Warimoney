@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WarimoneyController {
 
-	@GetMapping("/Login")
+	@GetMapping("/login")
 	public String showLoginForm() {
-		return "warimoney/login";
+		return "login";
 	}
 
 }
