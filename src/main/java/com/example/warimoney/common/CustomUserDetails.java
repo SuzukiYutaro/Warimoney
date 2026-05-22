@@ -1,11 +1,13 @@
 package com.example.warimoney.common;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import com.example.warimoney.domain.User;
-import java.util.Collection;
-import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
   private final User user;
@@ -13,7 +15,8 @@ public class CustomUserDetails implements UserDetails {
 
   public CustomUserDetails(User user) {
     this.user = user;
-    this.authorities = Collections.singletonList(new SimpleGrantedAuthority(user.role()));
+    this.authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+
   }
 
   // ユーザーに付与された権限を返す

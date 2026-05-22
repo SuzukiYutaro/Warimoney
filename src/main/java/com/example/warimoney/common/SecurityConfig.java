@@ -12,44 +12,34 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	// パスワードの暗号化
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+  // パスワードの暗号化
+  @Bean
+  PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-//	@Bean
-//	InMemoryUserDetailsManager userDetailsService() {
-//
-//		// テスト用ユーザー設定
-//		UserDetails user = User
-//				.withUsername("user")
-//				.password(passwordEncoder().encode("user"))
-//				.roles("USER")
-//				.build();
-//		return new InMemoryUserDetailsManager(user);
-//	}
+  
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        // ログインページの許可設定
+        .formLogin(login -> login // フォーム認証を使う
+        		.loginPage("/toLogin") // ログインページの設定
+            .defaultSuccessUrl("/projects") // 認証成功時のデフォルトの遷移先
+            .permitAll())
 
-		http
-				// ログインページの許可設定
-				.formLogin(login -> login // フォーム認証を使う
-						.loginPage("/tologin") // ログインページのURL
-						.defaultSuccessUrl("/projects") // 認証成功時の遷移先
-						.permitAll())
+        // リクエストの許可設定
+        .authorizeHttpRequests(authz -> authz
+            //参照権限
+            .requestMatchers("/")
+            .permitAll()
+            .requestMatchers("/toLogin")
+            .permitAll()
+            .requestMatchers("/projects")
+            .hasRole("USER"));
 
-				// リクエストの許可設定
-				.authorizeHttpRequests(authz -> authz
-						// register.html の参照権限
-						.requestMatchers("/register")
-						.permitAll()
-						// projects.html の参照権限
-						.requestMatchers("/projects")
-						.hasAnyRole("USER"));
-
-		return http.build();
-	}
+    return http.build();
+  }
 
 }

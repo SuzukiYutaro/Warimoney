@@ -20,8 +20,7 @@ public class LoginRepository {
   private RowMapper<User> USER_ROW_MAPPER = (rs, row) -> new User(
       rs.getInt("id"),
       rs.getString("username"),
-      rs.getString("password"),
-      rs.getString("role"));
+      rs.getString("password"));
 
   public Optional<User> findByUsername(String username) {
     SqlParameterSource param = new MapSqlParameterSource().addValue("username", username);

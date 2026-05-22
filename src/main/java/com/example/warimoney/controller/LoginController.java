@@ -2,17 +2,19 @@ package com.example.warimoney.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class WarimoneyController {
-	
-	@GetMapping("/tologin")
-	public String index() {
+@RequestMapping("")
+public class LoginController {
+
+	@GetMapping("/toLogin")
+	public String toLogin() {
 		return "warimoney/login";
 	}
-	
+
 	@GetMapping("/projects")
-	public String projects() {
+	public String user() {
 		return "warimoney/projects";
 	}
 
