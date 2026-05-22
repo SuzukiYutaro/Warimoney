@@ -1,6 +1,5 @@
 package com.example.warimoney.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +27,6 @@ public class LoginRepository {
     SqlParameterSource param = new MapSqlParameterSource().addValue("username", username);
     String sql = "SELECT * FROM users WHERE username = :username";
 
-    // queryForObject は結果が0件のとき例外を投げるため、安全に扱う
-    List<User> users = template.query(sql, param, USER_ROW_MAPPER);
-    if (users == null || users.isEmpty()) {
-      return Optional.empty();
-    }
-    return Optional.of(users.get(0));
+    return Optional.ofNullable(template.queryForObject(sql, param, USER_ROW_MAPPER));
   }
 }

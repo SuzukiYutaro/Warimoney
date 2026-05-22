@@ -37,15 +37,15 @@ public class SecurityConfig {
 				// ログインページの許可設定
 				.formLogin(login -> login // フォーム認証を使う
 						.loginPage("/tologin") // ログインページのURL
-						.defaultSuccessUrl("/projects") // 認証成功時のデフォルトの遷移先
+						.defaultSuccessUrl("/projects") // 認証成功時の遷移先
 						.permitAll())
 
 				// リクエストの許可設定
 				.authorizeHttpRequests(authz -> authz
-						// index.html の参照権限
-						.requestMatchers("/")
+						// register.html の参照権限
+						.requestMatchers("/register")
 						.permitAll()
-						// user.html の参照権限
+						// projects.html の参照権限
 						.requestMatchers("/projects")
 						.hasAnyRole("USER"));
 

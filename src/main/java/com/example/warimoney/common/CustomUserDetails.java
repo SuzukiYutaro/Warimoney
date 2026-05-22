@@ -1,19 +1,17 @@
 package com.example.warimoney.common;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.example.warimoney.domain.User;
+import java.util.Collection;
+import java.util.Collections;
 
-public class LoginUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
   private final User user;
   private final Collection<GrantedAuthority> authorities;
 
-  public LoginUserDetails(User user) {
+  public CustomUserDetails(User user) {
     this.user = user;
     this.authorities = Collections.singletonList(new SimpleGrantedAuthority(user.role()));
   }
@@ -60,4 +58,6 @@ public class LoginUserDetails implements UserDetails {
     return true;
   }
 }
+
+
 
