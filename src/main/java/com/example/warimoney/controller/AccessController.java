@@ -1,11 +1,15 @@
 package com.example.warimoney.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.warimoney.common.AppUserDetails;
+import com.example.warimoney.domain.User;
+import com.example.warimoney.repository.UserRepository;
 import com.example.warimoney.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class AccessController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     // ログインページへの遷移（ログイン処理ではない）
     @GetMapping("/login")
@@ -50,7 +55,10 @@ public class AccessController {
     }
 
     @GetMapping("/projects")
-    public String user() {
+    public String user(@AuthenticationPrincipal AppUserDetails userDetails, Model model) {
+    	Long userId = userDetails.getUser().getId();
+        User user = userRepository.findByIdWithProjects(userId).get();
+        model.addAttribute("projects", user.getProjects());
         return "warimoney/projects";
     }
 }
