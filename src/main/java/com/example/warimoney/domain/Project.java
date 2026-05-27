@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -63,6 +65,22 @@ public class Project {
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	@Builder.Default
 	private Set<Expense> expenses = new HashSet<>();
+	
+	public void touch() {
+	    this.updatedAt = LocalDateTime.now();
+	}
+
+	
+	@PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
 
 }

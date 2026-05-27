@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.example.warimoney.domain.Member;
 
 @Repository
-public interface memberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long> {
 }
