@@ -14,7 +14,6 @@
 	<table class="table table-striped align-middle mt-3">
 		<thead>
 			<tr>
-				<th>ID</th>
 				<th>プロジェクト名</th>
 				<th>作成日</th>
 				<th>更新日</th>
@@ -23,10 +22,11 @@
 
 		<tbody>
 			<tr th:each="project : ${projects}">
-				<td th:text="${project.id}"></td>
-				<td th:text="${project.projectName}"></td>
-				<td th:text="${project.createdAt}"></td>
-				<td th:text="${project.updatedAt}"></td>
+				<td>
+					<a th:href="@{|/projects/${project.id}|}" th:text="${project.projectName}"></a>
+				</td>
+				<td th:text="${#temporals.format(project.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
+				<td th:text="${#temporals.format(project.updatedAt, 'yyyy/MM/dd HH:mm')}"></td>
 			</tr>
 		</tbody>
 	</table>

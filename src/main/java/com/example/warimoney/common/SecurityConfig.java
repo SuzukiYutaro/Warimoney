@@ -15,27 +15,32 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-//				// CSRF トークンを設定していないため、CSRF をオフにする
-//				.csrf(csrf -> csrf.disable())
+				//				// CSRF トークンを設定していないため、CSRF をオフにする
+				//				.csrf(csrf -> csrf.disable())
 
-				// ページの認可の設定
-				.authorizeHttpRequests((authorize) -> authorize
-						// 認証不要パスの設定
-						.requestMatchers("/", "/register", "/login").permitAll()
-						// USER ロールを持ったユーザのみアクセス許可
-						.requestMatchers("/projects").hasRole("USER")
-						// ADMIN ロールを持ったユーザのみアクセス許可
-						.requestMatchers("/admin").hasRole("ADMIN")
-						// 上記で設定したパス以外は認証済みでなければアクセス拒否
+				.authorizeHttpRequests(authz -> authz
+						// 認証不要
+						.requestMatchers("/", "/register", "/login", "/css/**", "/js/**").permitAll()
+
+						// プロジェクト関連は USER ロール必須
+						.requestMatchers("/projects/**").hasRole("USER")
+
+						// 管理者ページ
+						.requestMatchers("/admin/**").hasRole("ADMIN")
+
+						// その他は認証必須
 						.anyRequest().authenticated())
+
 				.formLogin(login -> login
 						.loginPage("/login")
-						// ログインページのリクエスト先
 						.loginProcessingUrl("/login")
-						// ログイン成功
 						.defaultSuccessUrl("/projects")
-						// ログイン失敗時のリクエスト先
-						.failureUrl("/login?error=true"));
+						.failureUrl("/login?error=true")
+						.permitAll())
+
+				.logout(logout -> logout
+						.logoutSuccessUrl("/")
+						.permitAll());
 		// @formatter:on
 		return http.build();
 	}
