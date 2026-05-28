@@ -16,7 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // ログインページへの遷移（ログイン処理ではない）
+    // ログインページへの遷移
     @GetMapping("/login")
     public String login() {
         return "warimoney/login";

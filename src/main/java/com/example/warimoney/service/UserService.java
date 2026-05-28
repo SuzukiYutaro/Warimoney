@@ -31,4 +31,9 @@ public class UserService {
 
         userRepository.save(user);
     }
+    
+    public User getUserWithProjects(Long userId) {
+        return userRepository.findByIdWithProjects(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
 }
