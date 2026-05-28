@@ -18,8 +18,8 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
-    public Project getProject(Long id) {
-        return projectRepository.findByIdWithRelations(id)
+    public Project getProject(Long projectId) {
+        return projectRepository.findByIdWithRelations(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
     }
 
@@ -34,8 +34,8 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    public void editProject(Long id, String projectName) {
-        Project project = projectRepository.findById(id)
+    public void editProject(Long projectId, String projectName) {
+        Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         project.setProjectName(projectName);
@@ -44,8 +44,8 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
-    public void deleteProject(Long id) {
-        Project project = projectRepository.findById(id)
+    public void deleteProject(Long projectId) {
+        Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Project not found"));
 
         projectRepository.delete(project);

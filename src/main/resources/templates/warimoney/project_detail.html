@@ -219,7 +219,7 @@
 
 						<label class="mt-2">支払者：</label>
 						<select name="payerId" id="editExpensePayer" class="form-control" required>
-							<option th:each="m : ${project.members}" th:value="${project.id}" th:text="${project.memberName}">
+							<option th:each="m : ${project.members}" th:value="${m.id}" th:text="${m.memberName}">
 							</option>
 						</select>
 
