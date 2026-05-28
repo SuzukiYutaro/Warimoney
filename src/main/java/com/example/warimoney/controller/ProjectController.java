@@ -38,6 +38,42 @@ public class ProjectController {
 		model.addAttribute("projects", user.getProjects());
 		return "warimoney/projects";
 	}
+	
+	@PostMapping("/projects")
+	public String createProject(
+			@AuthenticationPrincipal AppUserDetails userDetails,
+			@RequestParam String projectName) {
+		Long userId = userDetails.getUser().getId();
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new IllegalArgumentException("Not found"));
+		
+		Project project = new Project();
+		project.setProjectName(projectName);
+		project.setUser(user);
+		projectRepository.save(project);
+		return "redirect:/projects";
+		
+	}
+	
+	@PostMapping("/projects/{id}/delete")
+	public String deleteProject(@PathVariable Long id) {
+		Project project = projectRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not found"));
+		projectRepository.delete(project);
+		return "redirect:/projects";
+	}
+	
+	@PostMapping("/projects/{id}/edit")
+	public String editProject(
+			@PathVariable Long id,
+			@RequestParam String projectName) {
+		Project project = projectRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Not found"));
+		project.setProjectName(projectName);
+		project.setUpdatedAt(LocalDateTime.now());
+		projectRepository.save(project);
+		return "redirect:/projects";
+	}
 
 	@GetMapping("/projects/{id}")
 	public String detail(@PathVariable Long id, Model model) {
@@ -167,15 +203,15 @@ public class ProjectController {
 			@PathVariable Long projectId,
 			@PathVariable Long expenseId) {
 
-		Member expense = MemberRepository.findById(expenseId)
-				.orElseThrow();
+			Expense expense = ExpenseRepository.findById(expenseId)
+					.orElseThrow();
 
-		MemberRepository.delete(expense);
+			
+			ExpenseRepository.delete(expense);
 
-		Project project = expense.getProject();
-		project.setUpdatedAt(LocalDateTime.now());
-		projectRepository.save(project);
-		return "redirect:/projects/" + projectId;
-	}
-
+			Project project = expense.getProject();
+			project.setUpdatedAt(LocalDateTime.now());
+			projectRepository.save(project);
+			return "redirect:/projects/" + projectId;
+		}
 }

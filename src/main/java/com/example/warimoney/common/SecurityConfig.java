@@ -15,7 +15,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
-				//				// CSRF トークンを設定していないため、CSRF をオフにする
+				//				CSRF をオフにする
 				//				.csrf(csrf -> csrf.disable())
 
 				.authorizeHttpRequests(authz -> authz
@@ -45,7 +45,7 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	// ハッシュ化のためにクラスを Bean 化
+	// ハッシュ化
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

@@ -1,14 +1,16 @@
 package com.example.warimoney.common;
 
-import com.example.warimoney.domain.User;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import java.util.Collection;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
+import com.example.warimoney.domain.User;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
@@ -16,7 +18,6 @@ public class AppUserDetails implements UserDetails {
 
     private final User user;
 
-    // ユーザのロール一覧を返す
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()));

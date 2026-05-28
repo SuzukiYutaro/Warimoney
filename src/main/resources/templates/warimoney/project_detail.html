@@ -95,6 +95,7 @@
 	</table>
 
 	<a th:href="@{/projects}" class="btn btn-secondary">一覧に戻る</a>
+
 	<div class="modal fade" id="addMemberModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -115,7 +116,6 @@
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
 						<button type="submit" class="btn btn-primary">追加</button>
 					</div>
 				</form>
@@ -147,7 +147,6 @@
 						<button type="button" class="btn btn-danger" id="deleteMemberBtn">削除</button>
 
 						<div>
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
 							<button type="submit" class="btn btn-primary">保存</button>
 						</div>
 					</div>
@@ -190,7 +189,6 @@
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
 						<button type="submit" class="btn btn-primary">追加</button>
 					</div>
 				</form>
@@ -231,13 +229,10 @@
 						<button type="button" class="btn btn-danger" id="deleteExpenseBtn">削除</button>
 
 						<div>
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
 							<button type="submit" class="btn btn-primary">保存</button>
 						</div>
 					</div>
 				</form>
-
-				<!-- 削除用フォーム -->
 				<form id="deleteExpenseForm" method="post" style="display:none;">
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 				</form>
