@@ -32,6 +32,7 @@ public class ProjectController {
 		return "warimoney/projects";
 	}
 
+	//プロジェクト作成
 	@PostMapping("/projects")
 	public String createProject(
 			@AuthenticationPrincipal AppUserDetails userDetails,
@@ -41,6 +42,7 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 
+	//プロジェクト編集
 	@PostMapping("/projects/{projectId}/edit")
 	public String editProject(
 			@PathVariable Long projectId,
@@ -49,13 +51,14 @@ public class ProjectController {
 		return "redirect:/projects";
 	}
 
+	//プロジェクト削除
 	@PostMapping("/projects/{projectId}/delete")
 	public String deleteProject(@PathVariable Long projectId) {
 		projectService.deleteProject(projectId);
 		return "redirect:/projects";
 	}
 
-	// プロジェクトの詳細ページ
+	// プロジェクト詳細ページ
 	@GetMapping("/projects/{projectId}")
 	public String detail(@PathVariable Long projectId, Model model) {
 		Project projectDetail = projectService.getProject(projectId);

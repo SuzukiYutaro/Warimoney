@@ -5,22 +5,20 @@ import org.springframework.stereotype.Service;
 import com.example.warimoney.domain.Member;
 import com.example.warimoney.domain.Project;
 import com.example.warimoney.repository.MemberRepository;
-import com.example.warimoney.repository.ProjectRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-
-	private final ProjectRepository projectRepository;
+	
 	private final MemberRepository memberRepository;
 	
 	private final ProjectService projectService;
 
+	// メンバー追加
 	public void addMember(Long projectId, String memberName) {
-		Project project = projectRepository.findById(projectId)
-				.orElseThrow(() -> new IllegalArgumentException("Not found"));
+		Project project = projectService.getProject(projectId);
 		Member member = new Member();
 		member.setMemberName(memberName);
 		member.setProject(project);
@@ -29,9 +27,9 @@ public class MemberService {
 		projectService.updateTimestamp(project);
 	}
 	
+	// メンバー編集
 	public void editMember(Long memberId, String memberName) {
 		Member member = getMember(memberId);
-
 		member.setMemberName(memberName);
 		memberRepository.save(member);
 
@@ -39,6 +37,7 @@ public class MemberService {
 		projectService.updateTimestamp(project);
 	}
 	
+	// メンバー削除
 	public void deleteMember(Long memberId) {
 		Member member = getMember(memberId);
 
@@ -53,9 +52,16 @@ public class MemberService {
 		projectService.updateTimestamp(project);
 	}
 	
+	// メンバーをIDで取得
 	public Member getMember(Long memberId) {
 		return memberRepository.findById(memberId)
 				.orElseThrow(() -> new IllegalArgumentException("Not found"));
+	}
+	
+	// 支払者をIDで取得
+	public Member getPayer(Long payerId) {
+		return memberRepository.findById(payerId)
+				.orElseThrow(() -> new IllegalArgumentException("Payer not found"));
 	}
 		
 

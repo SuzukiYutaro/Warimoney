@@ -14,40 +14,40 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+	private final UserService userService;
 
-    // ログインページへの遷移
-    @GetMapping("/login")
-    public String login() {
-        return "warimoney/login";
-    }
+	// ログインページへの遷移
+	@GetMapping("/login")
+	public String login() {
+		return "warimoney/login";
+	}
 
-    @GetMapping("/register")
-    public String register() {
-        return "warimoney/register";
-    }
+	// ユーザ登録ページへの遷移
+	@GetMapping("/register")
+	public String register() {
+		return "warimoney/register";
+	}
 
-    // ユーザ登録処理
-    @PostMapping("/register")
-    public String register(
-            @RequestParam String username,
-            @RequestParam String password,
-            Model model) {
+	// ユーザ登録
+	@PostMapping("/register")
+	public String register(
+			@RequestParam String username,
+			@RequestParam String password,
+			Model model) {
 
-        try {
-            userService.registerUser(username, password);
-        } catch (Exception e) {
-            model.addAttribute("error", "登録に失敗しました: " + e.getMessage());
-            return "warimoney/register";
-        }
+		try {
+			userService.registerUser(username, password);
+		} catch (Exception e) {
+			model.addAttribute("error", "登録に失敗しました: " + e.getMessage());
+			return "warimoney/register";
+		}
 
-        return "redirect:/login?registered=true";
-    }
+		return "redirect:/login?registered=true";
+	}
 
-    @GetMapping("/")
-    public String home() {
-        return "warimoney/login";
-    }
+	@GetMapping("/")
+	public String home() {
+		return "warimoney/login";
+	}
 
-   
 }

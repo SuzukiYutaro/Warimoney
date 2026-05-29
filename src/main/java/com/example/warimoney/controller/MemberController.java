@@ -16,6 +16,7 @@ public class MemberController {
 
 	private final MemberService memberService;
 
+	// メンバー追加
 	@PostMapping("/projects/{projectId}/members")
 	public String addMember(
 			@PathVariable Long projectId,
@@ -24,6 +25,7 @@ public class MemberController {
 		return "redirect:/projects/" + projectId;
 	}
 
+	// メンバー編集
 	@PostMapping("/projects/{projectId}/members/{memberId}/edit")
 	public String editMember(
 			@PathVariable Long projectId,
@@ -33,6 +35,7 @@ public class MemberController {
 		return "redirect:/projects/" + projectId;
 	}
 
+	// メンバー削除
 	@PostMapping("/projects/{projectId}/members/{memberId}/delete")
 	public String deleteMember(
 			@PathVariable Long projectId,

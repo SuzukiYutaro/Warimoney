@@ -10,14 +10,15 @@ import com.example.warimoney.domain.Project;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-	@Query("""
-		    SELECT DISTINCT p FROM Project p
-		    LEFT JOIN FETCH p.members m
-		    LEFT JOIN FETCH p.expenses e
-		    LEFT JOIN FETCH e.payer
-		    WHERE p.id = :id
-		""")
-		Optional<Project> findByIdWithRelations(Long id);
 
+	// プロジェクトをIDで取得（関連エンティティも一緒に）
+	@Query("""
+			    SELECT DISTINCT p FROM Project p
+			    LEFT JOIN FETCH p.members m
+			    LEFT JOIN FETCH p.expenses e
+			    LEFT JOIN FETCH e.payer
+			    WHERE p.id = :id
+			""")
+	Optional<Project> findByIdWithRelations(Long id);
 
 }

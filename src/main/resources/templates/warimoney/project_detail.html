@@ -41,7 +41,6 @@
 		<thead>
 			<tr>
 				<th>メンバー名</th>
-				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -81,7 +80,7 @@
 		<tbody>
 			<tr th:each="e : ${project.expenses}">
 				<td th:text="${e.payer.memberName}"></td>
-				<td th:text="${e.amount}"></td>
+				<td th:text="${#numbers.formatInteger(e.amount, 0)} + ' 円'"></td>
 				<td th:text="${e.description}"></td>
 				<td th:text="${#temporals.format(e.createdAt, 'yyyy/MM/dd HH:mm')}"></td>
 				<td>

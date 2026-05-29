@@ -27,19 +27,19 @@ import lombok.Setter;
 public class User {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, length = 255)
-    private String username;
+	@Column(nullable = false, length = 255)
+	private String username;
 
-    @Column(nullable = false, length = 255)
-    private String password;
+	@Column(nullable = false, length = 255)
+	private String password;
 
-    @Column(length = 255)
-    private String role;
+	@Column(length = 255)
+	private String role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Project> projects;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	private List<Project> projects;
 
 }

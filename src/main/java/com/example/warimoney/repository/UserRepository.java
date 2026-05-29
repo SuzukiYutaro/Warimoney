@@ -11,12 +11,13 @@ import com.example.warimoney.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // ユーザ名で検索（ログイン時に使用）
-    Optional<User> findByUsername(String username);
+	// ユーザ名で検索（ログイン時に使用）
+	Optional<User> findByUsername(String username);
 
-    // 指定されたユーザ名がすでに存在するか（ユーザ登録時に使用）
-    boolean existsByUsername(String username);
-    
-    @Query("SELECT u FROM User u LEFT JOIN FETCH u.projects WHERE u.id = :id")
-    Optional<User> findByIdWithProjects(Long id);
+	// 指定されたユーザ名がすでに存在するか（ユーザ登録時に使用）
+	boolean existsByUsername(String username);
+
+	// ユーザーをIDで取得（関連エンティティも一緒に）
+	@Query("SELECT u FROM User u LEFT JOIN FETCH u.projects WHERE u.id = :id")
+	Optional<User> findByIdWithProjects(Long id);
 }

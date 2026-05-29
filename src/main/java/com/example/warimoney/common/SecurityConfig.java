@@ -20,7 +20,7 @@ public class SecurityConfig {
 
 				.authorizeHttpRequests(authz -> authz
 						// 認証不要
-						.requestMatchers("/", "/register", "/login", "/css/**", "/js/**").permitAll()
+						.requestMatchers("/", "/register", "/login", "/css/**", "/error/**","/js/**").permitAll()
 
 						// プロジェクト関連は USER ロール必須
 						.requestMatchers("/projects/**").hasRole("USER")
