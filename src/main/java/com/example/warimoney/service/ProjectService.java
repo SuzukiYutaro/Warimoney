@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 public class ProjectService {
 
 	private final ProjectRepository projectRepository;
-	
 	private final UserService userService;
 
 	// プロジェクト作成
@@ -46,8 +45,10 @@ public class ProjectService {
 
 	// プロジェクトをIDで取得
 	public Project getProject(Long projectId) {
+
 		return projectRepository.findById(projectId)
 				.orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
 	}
 
 	// プロジェクトをIDで取得（関連エンティティも一緒に）
