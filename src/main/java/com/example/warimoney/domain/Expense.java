@@ -1,5 +1,6 @@
 package com.example.warimoney.domain;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +54,8 @@ public class Expense {
     @Builder.Default
     private List<ExpenseParticipant> participants = new ArrayList<>();
 
-
     @Column(nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
     @Column(length = 50)
     private String description;

@@ -185,6 +185,14 @@
 							</option>
 						</select>
 
+						<label class="mt-2">参加者</label>
+						<div class="form-check" th:each="m : ${project.members}">
+							<input class="form-check-input" type="checkbox" name="participantIds" th:value="${m.id}"
+								th:id="'participantCheck' + ${m.id}" />
+							<label class="form-check-label" th:for="'participantCheck' + ${m.id}"
+								th:text="${m.memberName}"></label>
+						</div>
+
 					</div>
 
 					<div class="modal-footer">
@@ -271,8 +279,7 @@
 				}
 			});
 		});
-	</script>
-	<script>
+
 		document.addEventListener("DOMContentLoaded", () => {
 			const modal = document.getElementById("editExpenseModal");
 
@@ -283,6 +290,7 @@
 				const amount = button.getAttribute("data-amount");
 				const desc = button.getAttribute("data-desc");
 				const payer = button.getAttribute("data-payer");
+
 
 				document.getElementById("editExpenseAmount").value = amount;
 				document.getElementById("editExpenseDesc").value = desc;

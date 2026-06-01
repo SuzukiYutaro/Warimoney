@@ -1,5 +1,9 @@
 package com.example.warimoney.controller;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +25,13 @@ public class ExpenseController {
 	public String addExpense(
 			@PathVariable Long projectId,
 			@RequestParam Long payerId,
-			@RequestParam Double amount,
-			@RequestParam String description) {
-		expenseService.addExpense(projectId, payerId, amount, description);
+			@RequestParam BigDecimal amount,
+			@RequestParam String description,
+			@RequestParam(required = false) List<Long> participantIds) {
+		if (participantIds == null) {
+	        participantIds = Collections.emptyList();
+	    }
+		expenseService.addExpense(projectId, payerId, amount, description, participantIds);
 		return "redirect:/projects/" + projectId;
 	}
 
@@ -33,7 +41,7 @@ public class ExpenseController {
 			@PathVariable Long projectId,
 			@RequestParam Long payerId,
 			@PathVariable Long expenseId,
-			@RequestParam Double amount,
+			@RequestParam BigDecimal amount,
 			@RequestParam String description) {
 		expenseService.editExpense(expenseId, payerId, amount, description);
 		return "redirect:/projects/" + projectId;

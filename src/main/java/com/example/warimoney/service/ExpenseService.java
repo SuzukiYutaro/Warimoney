@@ -1,9 +1,15 @@
 package com.example.warimoney.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.warimoney.domain.Expense;
+import com.example.warimoney.domain.ExpenseParticipant;
 import com.example.warimoney.domain.Member;
 import com.example.warimoney.domain.Project;
 import com.example.warimoney.repository.ExpenseParticipantRepository;
@@ -26,8 +32,9 @@ public class ExpenseService {
 	public void addExpense(
 			Long projectId,
 			Long payerId,
-			Double amount,
-			String description) {
+			BigDecimal amount,
+			String description,
+			List<Long> participantIds) {
 		Project project = projectService.getProject(projectId);
 
 		Member payer = memberService.getMember(payerId);
@@ -39,8 +46,12 @@ public class ExpenseService {
 		expense.setProject(project);
 
 		expenseRepository.save(expense);
-		Project updatedProject = expense.getProject();
-		projectService.updateTimestamp(updatedProject);
+
+		Integer shereAmount = calculateShareAmount(amount, participantIds);
+		addParticipants(participantIds, expense, shereAmount);
+
+		Project Project = expense.getProject();
+		projectService.updateTimestamp(Project);
 
 	}
 
@@ -49,7 +60,7 @@ public class ExpenseService {
 	public void editExpense(
 			Long expenseId,
 			Long payerId,
-			Double amount,
+			BigDecimal amount,
 			String description) {
 		Expense expense = getExpense(expenseId);
 		Member payer = memberService.getMember(payerId);
@@ -75,10 +86,49 @@ public class ExpenseService {
 		projectService.updateTimestamp(project);
 	}
 
+	// 支払い参加者記録追加
+	private void addParticipants(
+			List<Long> participantIds,
+			Expense expense,
+			int shareAmount) {
+		if (participantIds == null || participantIds.isEmpty()) {
+			return;
+		}
+
+		List<ExpenseParticipant> list = new ArrayList<>();
+
+		for (Long memberId : participantIds) {
+			Member member = memberService.getMember(memberId);
+			ExpenseParticipant ep = new ExpenseParticipant();
+			ep.setExpense(expense.getId() != null ? expense : expenseRepository.save(expense));
+			ep.setParticipant(member);
+			ep.setShareAmount(shareAmount);
+
+			expenseParticipantRepository.save(ep);
+
+			list.add(ep);
+		}
+
+		expense.setParticipants(list);
+	}
+
 	// 支払い記録をIDで取得
 	public Expense getExpense(Long expenseId) {
 		return expenseRepository.findById(expenseId)
 				.orElseThrow(() -> new IllegalArgumentException("支払い記録が存在しません"));
+	}
+
+	// 割り勘計算
+	private int calculateShareAmount(BigDecimal amount, List<Long> participantIds) {
+		if (participantIds == null || participantIds.isEmpty()) {
+			return 0;
+		}
+
+		// 金額を人数で割る（小数点以下切り捨て）
+		return amount.divide(
+				BigDecimal.valueOf(participantIds.size()),
+				0,
+				RoundingMode.DOWN).intValue();
 	}
 
 }
