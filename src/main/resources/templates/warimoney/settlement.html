@@ -1,0 +1,24 @@
+<h2 th:text="${project.projectName} + ' の精算結果'"></h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>メンバー</th>
+            <th>支払額</th>
+            <th>負担額</th>
+            <th>差額</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="r : ${results}">
+            <td th:text="${r.memberName}"></td>
+            <td th:text="${r.paidAmount} + ' 円'"></td>
+            <td th:text="${r.shareAmount} + ' 円'"></td>
+            <td>
+                <span th:if="${r.balance > 0}" th:text="'+' + ${r.balance} + ' 円（受取）'" class="text-success"></span>
+                <span th:if="${r.balance < 0}" th:text="${r.balance} + ' 円（支払）'" class="text-danger"></span>
+                <span th:if="${r.balance == 0}">±0 円</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

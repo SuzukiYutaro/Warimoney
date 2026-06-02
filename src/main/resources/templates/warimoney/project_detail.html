@@ -92,8 +92,13 @@
 			</tr>
 		</tbody>
 	</table>
-
 	<a th:href="@{/projects}" class="btn btn-secondary">一覧に戻る</a>
+
+	<a th:href="@{'/projects/' + ${project.id} + '/settlement'}" class="btn btn-success">
+		精算
+	</a>
+
+
 
 	<div class="modal fade" id="addMemberModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog">
