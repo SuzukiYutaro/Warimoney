@@ -8,5 +8,4 @@ import com.example.warimoney.domain.ExpenseParticipant;
 @Repository
 public interface ExpenseParticipantRepository extends JpaRepository<ExpenseParticipant, Long> {
 
-	
 }

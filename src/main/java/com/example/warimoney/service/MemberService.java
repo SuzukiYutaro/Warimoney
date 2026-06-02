@@ -33,8 +33,7 @@ public class MemberService {
 		member.setMemberName(memberName);
 		memberRepository.save(member);
 
-		Project project = member.getProject();
-		projectService.updateTimestamp(project);
+		projectService.updateTimestamp(member.getProject());
 	}
 	
 	// メンバー削除
@@ -48,8 +47,7 @@ public class MemberService {
 
 		memberRepository.delete(member);
 
-		Project project = member.getProject();
-		projectService.updateTimestamp(project);
+		projectService.updateTimestamp(member.getProject());
 	}
 	
 	// メンバーをIDで取得

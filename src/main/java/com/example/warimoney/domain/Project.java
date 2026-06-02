@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -60,10 +61,12 @@ public class Project {
 	
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	@Builder.Default
+	@OrderBy("id ASC")
 	private Set<Member> members = new HashSet<>();
 
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	@Builder.Default
+	@OrderBy("createdAt DESC")
 	private Set<Expense> expenses = new HashSet<>();
 	
 	public void touch() {

@@ -2,7 +2,6 @@ package com.example.warimoney.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import com.example.warimoney.domain.Expense;
 import com.example.warimoney.domain.ExpenseParticipant;
 import com.example.warimoney.domain.Member;
 import com.example.warimoney.domain.Project;
-import com.example.warimoney.repository.ExpenseParticipantRepository;
 import com.example.warimoney.repository.ExpenseRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class ExpenseService {
 
 	private final ExpenseRepository expenseRepository;
-	private final ExpenseParticipantRepository expenseParticipantRepository;
 
 	private final ProjectService projectService;
 	private final MemberService memberService;
@@ -50,8 +47,7 @@ public class ExpenseService {
 		Integer shereAmount = calculateShareAmount(amount, participantIds);
 		addParticipants(participantIds, expense, shereAmount);
 
-		Project Project = expense.getProject();
-		projectService.updateTimestamp(Project);
+		projectService.updateTimestamp(expense.getProject());
 
 	}
 
@@ -61,7 +57,8 @@ public class ExpenseService {
 			Long expenseId,
 			Long payerId,
 			BigDecimal amount,
-			String description) {
+			String description,
+			List<Long> participantIds) {
 		Expense expense = getExpense(expenseId);
 		Member payer = memberService.getMember(payerId);
 
@@ -69,10 +66,13 @@ public class ExpenseService {
 		expense.setDescription(description);
 		expense.setPayer(payer);
 
-		expenseRepository.save(expense);
+		expense.getParticipants().clear();
 
-		Project project = expense.getProject();
-		projectService.updateTimestamp(project);
+		int shareAmount = calculateShareAmount(amount, participantIds);
+
+		addParticipants(participantIds, expense, shareAmount);
+
+		projectService.updateTimestamp(expense.getProject());
 	}
 
 	// 支払い記録削除
@@ -82,8 +82,7 @@ public class ExpenseService {
 
 		expenseRepository.delete(expense);
 
-		Project project = expense.getProject();
-		projectService.updateTimestamp(project);
+		projectService.updateTimestamp(expense.getProject());
 	}
 
 	// 支払い参加者記録追加
@@ -95,21 +94,16 @@ public class ExpenseService {
 			return;
 		}
 
-		List<ExpenseParticipant> list = new ArrayList<>();
-
 		for (Long memberId : participantIds) {
 			Member member = memberService.getMember(memberId);
+
 			ExpenseParticipant ep = new ExpenseParticipant();
-			ep.setExpense(expense.getId() != null ? expense : expenseRepository.save(expense));
+			ep.setExpense(expense);
 			ep.setParticipant(member);
 			ep.setShareAmount(shareAmount);
 
-			expenseParticipantRepository.save(ep);
-
-			list.add(ep);
+			expense.getParticipants().add(ep);
 		}
-
-		expense.setParticipants(list);
 	}
 
 	// 支払い記録をIDで取得

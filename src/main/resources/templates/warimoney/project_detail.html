@@ -74,7 +74,7 @@
 				<th>支払者</th>
 				<th>金額</th>
 				<th>説明</th>
-				<th>日時</th>
+				<th>記録日時</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -229,6 +229,14 @@
 							<option th:each="m : ${project.members}" th:value="${m.id}" th:text="${m.memberName}">
 							</option>
 						</select>
+
+						<label class="mt-2">参加者</label>
+						<div class="form-check" th:each="m : ${project.members}">
+							<input class="form-check-input" type="checkbox" name="participantIds" th:value="${m.id}"
+								th:id="'participantCheck' + ${m.id}" />
+							<label class="form-check-label" th:for="'participantCheck' + ${m.id}"
+								th:text="${m.memberName}"></label>
+						</div>
 
 					</div>
 

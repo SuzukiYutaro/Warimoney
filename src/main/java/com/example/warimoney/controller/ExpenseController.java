@@ -42,8 +42,9 @@ public class ExpenseController {
 			@RequestParam Long payerId,
 			@PathVariable Long expenseId,
 			@RequestParam BigDecimal amount,
-			@RequestParam String description) {
-		expenseService.editExpense(expenseId, payerId, amount, description);
+			@RequestParam String description,
+			@RequestParam(required = false) List<Long> participantIds) {
+		expenseService.editExpense(expenseId, payerId, amount, description, participantIds);
 		return "redirect:/projects/" + projectId;
 	}
 
