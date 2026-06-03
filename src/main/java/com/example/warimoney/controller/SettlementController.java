@@ -13,17 +13,17 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class SettlementController {
-	
+
 	private final ProjectService projectService;
 	private final SettlementService settlementService;
-	
+
 	@GetMapping("/projects/{projectId}/settlement")
-    public String settlement(
-            @PathVariable Long projectId,
-            Model model
-    ) {
-        model.addAttribute("project", projectService.getProject(projectId));
-        model.addAttribute("results", settlementService.calculateSettlement(projectId));
-        return "/warimoney/settlement";
-    }
+	public String settlement(
+			@PathVariable Long projectId,
+			Model model) {
+		model.addAttribute("project", projectService.getProject(projectId));
+		model.addAttribute("results", settlementService.calculateSettlement(projectId));
+		model.addAttribute("transfers", settlementService.calculateTransfers(projectId));
+		return "/warimoney/settlement";
+	}
 }
