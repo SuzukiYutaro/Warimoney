@@ -61,7 +61,7 @@
 
 	<hr>
 
-	<!-- 支払い一覧 -->
+	<!--支払い一覧-->
 	<h3>支払い一覧</h3>
 	<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
 		支払い追加
@@ -92,6 +92,71 @@
 			</tr>
 		</tbody>
 	</table>
+	<hr>
+
+	<h3>支払状況</h3>
+
+	<div class="d-flex justify-content-center">
+		<canvas id="paidChart"></canvas>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script th:inline="javascript">
+		const paidLabels = /*[[${paidMap.keySet()}]]*/[];
+		const paidValues = /*[[${paidMap.values()}]]*/[];
+
+		//ラベルと値をまとめて配列にして金額順にソート（降順）
+		let combined = paidLabels.map((name, i) => ({name, value: paidValues[i]}));
+		combined.sort((a, b) => b.value - a.value);
+
+		const sortedLabelsWithAmount = combined.map(item => `${item.name}（${item.value}円）`);
+		const sortedValues = combined.map(item => item.value);
+
+		//色を人数分生成
+		function generateColors(n) {
+			const colors = [];
+			for (let i = 0; i < n; i++) {
+				const hue = (i * 360 / n) % 360;
+				colors.push(`hsl(${hue}, 70%, 60%)`);
+			}
+			return colors;
+		}
+
+		const ctx = document.getElementById('paidChart');
+
+		new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: sortedLabelsWithAmount,
+				datasets: [{
+					data: sortedValues,
+					backgroundColor: generateColors(sortedValues.length),
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				layout: {
+					padding: 10
+				},
+				plugins: {
+					legend: {
+						position: 'top',
+						labels: {
+							boxWidth: 20,
+							font: {size: 12}
+						}
+					}
+				}
+			}
+		});
+
+		ctx.parentElement.style.width = '300px';
+		ctx.parentElement.style.height = '300px';
+	</script>
+
 	<a th:href="@{/projects}" class="btn btn-secondary">一覧に戻る</a>
 
 	<a th:href="@{'/projects/' + ${project.id} + '/settlement'}" class="btn btn-success">
