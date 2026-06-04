@@ -1,5 +1,7 @@
 package com.example.warimoney.controller;
 
+import java.util.Map;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import com.example.warimoney.common.AppUserDetails;
 import com.example.warimoney.domain.Project;
 import com.example.warimoney.domain.User;
 import com.example.warimoney.service.ProjectService;
+import com.example.warimoney.service.SettlementService;
 import com.example.warimoney.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,7 @@ public class ProjectController {
 
 	private final UserService userService;
 	private final ProjectService projectService;
+	private final SettlementService settlementService;
 
 	// プロジェクト一覧ページ
 	@GetMapping("/projects")
@@ -62,7 +66,9 @@ public class ProjectController {
 	@GetMapping("/projects/{projectId}")
 	public String detail(@PathVariable Long projectId, Model model) {
 		Project projectDetail = projectService.getProject(projectId);
+		Map<String, Integer> paidMap = settlementService.calculatePaid(projectId);
 		model.addAttribute("project", projectDetail);
+		model.addAttribute("paidMap", paidMap);
 		return "warimoney/project_detail";
 	}
 

@@ -2,6 +2,7 @@ package com.example.warimoney.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -121,6 +122,23 @@ public class SettlementService {
 		}
 
 		return transfers;
+	}
+	
+	//支払額の集計
+	public Map<String, Integer> calculatePaid(Long projectId) {
+		Project project = projectService.getProject(projectId);
+		Map<String, Integer> paidMap = new LinkedHashMap<>();
+
+		for (Member m : project.getMembers()) {
+	        paidMap.put(m.getMemberName(), 0);
+	    }
+
+	    for (Expense e : project.getExpenses()) {
+	        String payer = e.getPayer().getMemberName();
+	        int amount = e.getAmount().intValue();
+	        paidMap.put(payer, paidMap.get(payer) + amount);
+	    }
+		return paidMap;
 	}
 
 }
