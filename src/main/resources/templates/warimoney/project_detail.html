@@ -7,7 +7,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body class="container mt-4">
+<body class="container mt-4" th:attr="data-project-id=${project.id}">
 	<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
 
@@ -94,68 +94,17 @@
 	</table>
 	<hr>
 
+	<!--データ-->
 	<h3>支払状況</h3>
 
 	<div class="d-flex justify-content-center">
 		<canvas id="paidChart"></canvas>
 	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 	<script th:inline="javascript">
-		const paidLabels = /*[[${paidMap.keySet()}]]*/[];
-		const paidValues = /*[[${paidMap.values()}]]*/[];
-
-		//ラベルと値をまとめて配列にして金額順にソート（降順）
-		let combined = paidLabels.map((name, i) => ({name, value: paidValues[i]}));
-		combined.sort((a, b) => b.value - a.value);
-
-		const sortedLabelsWithAmount = combined.map(item => `${item.name}（${item.value}円）`);
-		const sortedValues = combined.map(item => item.value);
-
-		//色を人数分生成
-		function generateColors(n) {
-			const colors = [];
-			for (let i = 0; i < n; i++) {
-				const hue = (i * 360 / n) % 360;
-				colors.push(`hsl(${hue}, 70%, 60%)`);
-			}
-			return colors;
-		}
-
-		const ctx = document.getElementById('paidChart');
-
-		new Chart(ctx, {
-			type: 'pie',
-			data: {
-				labels: sortedLabelsWithAmount,
-				datasets: [{
-					data: sortedValues,
-					backgroundColor: generateColors(sortedValues.length),
-					borderWidth: 1
-				}]
-			},
-			options: {
-				responsive: true,
-				maintainAspectRatio: false,
-				layout: {
-					padding: 10
-				},
-				plugins: {
-					legend: {
-						position: 'top',
-						labels: {
-							boxWidth: 20,
-							font: {size: 12}
-						}
-					}
-				}
-			}
-		});
-
-		ctx.parentElement.style.width = '300px';
-		ctx.parentElement.style.height = '300px';
+	    const paidLabels = /*[[${paidMap.keySet()}]]*/ [];
+	    const paidValues = /*[[${paidMap.values()}]]*/ [];
 	</script>
+
 
 	<a th:href="@{/projects}" class="btn btn-secondary">一覧に戻る</a>
 
@@ -325,70 +274,10 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-	<script th:inline="javascript">
-		const projectId = /*[[${project.id}]]*/ 0;
-
-		document.addEventListener("DOMContentLoaded", () => {
-			const modal = document.getElementById("editMemberModal");
-
-			modal.addEventListener("show.bs.modal", event => {
-				const button = event.relatedTarget;
-
-				const id = button.getAttribute("data-id");
-				const name = button.getAttribute("data-name");
-
-				document.getElementById("editMemberName").value = name;
-
-				document.getElementById("editMemberForm").action =
-					`/projects/${projectId}/members/${id}/edit`;
-
-				document.getElementById("deleteMemberForm").action =
-					`/projects/${projectId}/members/${id}/delete`;
-			});
-
-			document.getElementById("deleteMemberBtn").addEventListener("click", () => {
-				if (confirm("本当に削除しますか？")) {
-					document.getElementById("deleteMemberForm").submit();
-				}
-			});
-		});
-
-		document.addEventListener("DOMContentLoaded", () => {
-			const modal = document.getElementById("editExpenseModal");
-
-			modal.addEventListener("show.bs.modal", event => {
-				const button = event.relatedTarget;
-
-				const id = button.getAttribute("data-id");
-				const amount = button.getAttribute("data-amount");
-				const desc = button.getAttribute("data-desc");
-				const payer = button.getAttribute("data-payer");
-
-
-				document.getElementById("editExpenseAmount").value = amount;
-				document.getElementById("editExpenseDesc").value = desc;
-				document.getElementById("editExpensePayer").value = payer;
-
-				document.getElementById("editExpenseForm").action =
-					`/projects/${projectId}/expenses/${id}/edit`;
-
-				document.getElementById("deleteExpenseForm").action =
-					`/projects/${projectId}/expenses/${id}/delete`;
-			});
-
-			document.getElementById("deleteExpenseBtn").addEventListener("click", () => {
-				if (confirm("本当に削除しますか？")) {
-					document.getElementById("deleteExpenseForm").submit();
-				}
-			});
-		});
-	</script>
-
+	<script th:src="@{/js/project_detail.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script th:src="@{/js/project_chart.js}"></script>
 </body>
 
 </html>
