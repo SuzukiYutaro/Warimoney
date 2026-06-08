@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Bebas Neue', cursive;
+}
+
+body {
+	background: #d5d5d5
+}
+
+.page {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.title {
+	font-size: 15px;
+	font-weight: bold;
+	color: #143526;
+}
+
+.logo {
+	text-align: center;
+}
+
+.logo img {
+        width: 150px;
+		height: auto;
+		}
+		
+.logo-text {
+	font-size: 30px;
+	color: #143526;
+	padding-right: 10px;
+}
+
+.login-card {
+	background: #143526;
+	color: #d5d5d5;
+	width: 400px;
+	padding: 28px 32px 24px;
+	border-radius: 50px;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+.field {
+	margin-bottom: 20px;
+}
+
+.field label {
+	display: block;
+	font-size: 11px;
+	letter-spacing: 0.15em;
+	margin-bottom: 6px;
+}
+
+.field input {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #d5d5d5;
+	background: transparent;
+	padding: 6px 0;
+	color: #d5d5d5;
+	font-size: 14px;
+}
+
+.field input:focus {
+	outline: none;
+	border-bottom-color: #d5d5d5aa;
+}
+
+.btn {
+	width: 100%;
+	border: none;
+	padding: 10px 0;
+	font-size: 13px;
+	letter-spacing: 0.18em;
+	cursor: pointer;
+}
+
+.login-btn,.signup-btn {
+	background: #d5d5d5;
+	color: #143526;
+	font-weight: 600;
+	margin-bottom: 14px;
+}
+
+.login-btn:hover {
+	background: #d5d5d5cc;
+}
+
+.divider {
+	text-align: center;
+	color: #d5d5d5aa;
+	font-size: 10px;
+	margin-bottom: 10px;
+}
+
+.signup-btn:hover {
+	background: #d5d5d5cc;
+}
+
+.message {
+	text-align: center;
+    font-size: 15px;
+	margin-top: 10px;
+}
+
