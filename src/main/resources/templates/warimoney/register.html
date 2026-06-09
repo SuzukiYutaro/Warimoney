@@ -11,7 +11,6 @@
 <body>
 	<div class="page">
 		<div class="title">割り勘記録・清算アプリ</div>
-
 		<div class="logo">
 			<img src="/img/warimoney_logo.png" class="img" alt="Logo">
 			<div class="logo-text">WARIMONEY</div>
@@ -34,17 +33,20 @@
 				<button type="submit" class="btn login-btn">SIGN UP</button>
 			</form>
 
-			<div class="divider">──────────</div>
+			<hr class="divider">
 
 			<a th:href="@{/login}">
 				<button class="btn signup-btn">LOGIN</button>
 			</a>
 		</div>
-		<div th:if="${param.error}">
-			<p style="color:red">ユーザ名またはパスワードが間違っています。</p>
-		</div>
-		<div th:if="${param.registered}">
-			<p style="color:green">ユーザ登録が完了しました。ログインしてください。</p>
+
+		<div class="message">
+			<div th:if="${param.error}">
+				<p style="color:red">ユーザ名またはパスワードが間違っています。</p>
+			</div>
+			<div th:if="${param.registered}">
+				<p style="color:green">ユーザ登録が完了しました。ログインしてください。</p>
+			</div>
 		</div>
 	</div>
 </body>

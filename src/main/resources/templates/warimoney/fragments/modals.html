@@ -2,6 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
+	<!-- プロジェクト追加モーダル -->
+	<div th:fragment="addProjectModal">
+		<div class="modal fade" id="addProjectModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">新規プロジェクト</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<form th:action="@{'/projects'}" method="post">
+						<div class="modal-body">
+
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+							<label>プロジェクト名：</label>
+							<input type="text" name="projectName" class="form-control" required>
+
+						</div>
+
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">追加</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--プロジェクト編集モーダル-->
+	<div th:fragment="editProjectModal">
+		<div class="modal fade" id="editProjectModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">プロジェクト編集</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<form id="editProjectForm" method="post">
+						<div class="modal-body">
+
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+							<label>プロジェクト名：</label>
+							<input type="text" name="projectName" id="editProjectName" class="form-control" required>
+
+						</div>
+
+						<div class="modal-footer d-flex justify-content-between">
+							<button type="button" class="btn btn-danger" id="deleteProjectBtn">削除</button>
+
+							<div>
+								<button type="submit" class="btn btn-primary">保存</button>
+							</div>
+						</div>
+					</form>
+					<form id="deleteProjectForm" method="post" style="display:none;">
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- メンバー追加モーダル -->
 	<div th:fragment="addMemberModal">

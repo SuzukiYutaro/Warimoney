@@ -30,12 +30,12 @@ body {
 }
 
 .logo img {
-        width: 150px;
-		height: auto;
-		}
-		
+	width: 150px;
+	height: auto;
+}
+
 .logo-text {
-	font-size: 30px;
+	font-size: 40px;
 	color: #143526;
 	padding-right: 10px;
 }
@@ -44,30 +44,31 @@ body {
 	background: #143526;
 	color: #d5d5d5;
 	width: 400px;
-	padding: 28px 32px 24px;
+	padding: 40px 40px 20px;
 	border-radius: 50px;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
 
 .field {
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+	position: relative;
 }
 
 .field label {
 	display: block;
-	font-size: 11px;
-	letter-spacing: 0.15em;
-	margin-bottom: 6px;
+	font-size: 20px;
+	margin-bottom: 10px;
 }
 
 .field input {
 	width: 100%;
 	border: none;
-	border-bottom: 1px solid #d5d5d5;
+	border-bottom: 1.5px solid #d5d5d5;
 	background: transparent;
-	padding: 6px 0;
+	padding: 5px 0;
 	color: #d5d5d5;
-	font-size: 14px;
+	font-size: 20px;
+	font-family: 'Consolas', monospace;
 }
 
 .field input:focus {
@@ -75,23 +76,30 @@ body {
 	border-bottom-color: #d5d5d5aa;
 }
 
+.hr {
+	border: none;
+	border-top: 1px solid #d5d5d5aa;
+	margin-bottom: 30px;
+}
+
 .btn {
 	width: 100%;
 	border: none;
+	border-radius: 30px;
 	padding: 10px 0;
-	font-size: 13px;
-	letter-spacing: 0.18em;
+	font-size: 15px;
 	cursor: pointer;
-}
 
-.login-btn,.signup-btn {
 	background: #d5d5d5;
 	color: #143526;
-	font-weight: 600;
-	margin-bottom: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	margin-top: 10px;
 }
 
-.login-btn:hover {
+
+
+.btn:hover {
 	background: #d5d5d5cc;
 }
 
@@ -102,13 +110,9 @@ body {
 	margin-bottom: 10px;
 }
 
-.signup-btn:hover {
-	background: #d5d5d5cc;
-}
 
 .message {
 	text-align: center;
-    font-size: 15px;
+	font-size: 15px;
 	margin-top: 10px;
 }
-
