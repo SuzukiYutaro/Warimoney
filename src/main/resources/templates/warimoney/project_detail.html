@@ -41,7 +41,7 @@
 				<section class="panel expenses-panel">
 
 					<div class="panel-title">
-						EXPENSES
+						<h2>EXPENSES</h2>
 						<span>立替記録</span>
 						<button class="small-add-btn" data-bs-toggle="modal" data-bs-target="#addExpenseModal">
 							＋
@@ -50,7 +50,7 @@
 
 					<div class="expense-list">
 
-						<s class="expense-item" th:each="e : ${project.expenses}">
+						<div class="expense-item" th:each="e : ${project.expenses}">
 
 							<div class="expense-meta">
 
@@ -65,7 +65,7 @@
 
 								<span class="amount" th:text="${#numbers.formatInteger(e.amount,0)} + '円'">
 								</span>
-								<span class="expense-desc" th:text="'内容' + ${e.description}">
+								<span class="expense-desc" th:text="${e.description}">
 								</span>
 
 								<button class="edit-mini-btn" data-bs-toggle="modal" data-bs-target="#editExpenseModal"
@@ -77,70 +77,64 @@
 									編集
 								</button>
 							</span>
+						</div>
 
 					</div>
+				</section>
+
+				<!-- Data -->
+				<section class="panel data-panel">
+
+					<div class="panel-title">
+						<h2>DATA</h2>
+						<span>立替状況</span>
+					</div>
+
+					<canvas id="paidChart"></canvas>
+
+				</section>
+
+				<section class="panel members-panel">
+
+					<div class="panel-title">
+						<h2>MEMBER</h2>
+						<span>参加者</span>
+					</div>
+
+					<ul class="member-list">
+
+						<li th:each="m : ${project.members}">
+
+							<span th:text="${m.memberName}">
+							</span>
+
+							<button class="member-edit-btn" data-bs-toggle="modal" data-bs-target="#editMemberModal"
+								th:attr="
+				                                data-id=${m.id},
+				                                data-name=${m.memberName}">
+								編集
+							</button>
+
+						</li>
+
+					</ul>
+
+					<button class="member-add-btn" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+						＋
+					</button>
+
+				</section>
 
 			</div>
+			<div class="settlement-area">
 
-			</section>
+				<a th:href="@{'/projects/' + ${project.id} + '/settlement'}" class="settlement-btn">
 
-			<!-- Data -->
-			<section class="panel data-panel">
+					SETTLEMENT 清算
 
-				<div class="panel-title">
-					DATA
-					<span>立替状況</span>
-				</div>
+				</a>
 
-				<canvas id="paidChart"></canvas>
-
-				<div class="detail-link">
-					詳細
-				</div>
-
-			</section>
-
-			<!-- Members -->
-			<section class="panel members-panel">
-
-				<div class="panel-title">
-					MEMBERS
-				</div>
-
-				<ul class="member-list">
-
-					<li th:each="m : ${project.members}">
-
-						<span th:text="${m.memberName}">
-						</span>
-
-						<button class="member-edit-btn" data-bs-toggle="modal" data-bs-target="#editMemberModal"
-							th:attr="
-                                data-id=${m.id},
-                                data-name=${m.memberName}">
-							編集
-						</button>
-
-					</li>
-
-				</ul>
-
-				<button class="member-add-btn" data-bs-toggle="modal" data-bs-target="#addMemberModal">
-					＋
-				</button>
-
-			</section>
-
-		</div>
-
-		<!-- Settlement -->
-		<div class="settlement-area">
-
-			<a th:href="@{'/projects/' + ${project.id} + '/settlement'}" class="settlement-btn">
-
-				SETTLEMENT 清算
-
-			</a>
+			</div>
 
 		</div>
 
