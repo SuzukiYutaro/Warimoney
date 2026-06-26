@@ -10,10 +10,15 @@
 body {
 	background: #d5d5d5;
 	font-family: 'Bebas Neue', cursive;
+	height: 100vh;
+	overflow: hidden;
 }
 
 .page {
 	padding: 20px 80px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 /*header*/
@@ -53,7 +58,7 @@ body {
 }
 
 .logo img {
-	width: 150px;
+	width: 100px;
 	height: auto;
 }
 
@@ -63,6 +68,10 @@ body {
 	background: #143526;
 	border-radius: 35px;
 	padding: 20px 30px 30px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 }
 
 .project-header {
@@ -79,15 +88,21 @@ body {
 
 
 .content-grid {
+	flex: 1;
 	display: grid;
 	grid-template-columns: 2fr 1fr 1fr;
 	gap: 10px;
+	min-height: 0;
+	/* 超重要 */
 }
 
 .panel {
 	background: #d5d5d5;
 	border-radius: 25px;
 	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
 }
 
 .panel-title {
@@ -139,6 +154,9 @@ body {
 	flex-direction: column;
 	gap: 12px;
 	padding-top: 10px;
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;
 }
 
 .expense-item {
@@ -176,13 +194,21 @@ body {
 /* data*/
 
 .data-panel {
-	display: flex;
-	flex-direction: column;
-	flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.chart-wrapper {
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    height: 100%;
 }
 
 #paidChart {
-	flex: 1;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 
@@ -196,6 +222,9 @@ body {
 .member-list {
 	list-style: none;
 	padding: 0;
+	flex: 1;
+	overflow-y: auto;
+	min-height: 0;
 }
 
 .member-list li {
@@ -247,7 +276,7 @@ body {
 }
 
 
-.edit-mini-btn:hover{
+.edit-mini-btn:hover {
 	background: #c7c7c7;
 	transform: translateY(-1px);
 }
@@ -290,18 +319,40 @@ body {
 
 /*scroll */
 
-.expenses-panel,
-.members-panel {
-	max-height: 500px;
-	overflow-y: auto;
+.expense-list::-webkit-scrollbar,
+.member-list::-webkit-scrollbar {
+	width: 8px;
+}
+
+.expense-list::-webkit-scrollbar-track,
+.member-list::-webkit-scrollbar-track {
+	background: #d5d5d5;
+	border-radius: 10px;
+}
+
+.expense-list::-webkit-scrollbar-thumb,
+.member-list::-webkit-scrollbar-thumb {
+	background: #143526;
+	border-radius: 10px;
+	border: 2px solid #d5d5d5;
+}
+
+.expense-list::-webkit-scrollbar-thumb:hover,
+.member-list::-webkit-scrollbar-thumb:hover {
+	background: #0f2a1e;
 }
 
 /*レスポンシブ*/
 
 @media(max-width:768px) {
 
+	body {
+		overflow: auto;
+	}
+
 	.page {
 		padding: 20px;
+		height: auto;
 	}
 
 	.header {
@@ -347,9 +398,14 @@ body {
 }
 
 @media(max-width:480px) {
+	body {
+		overflow: auto;
+	}
+
 
 	.page {
 		padding: 15px;
+		height: auto;
 	}
 
 	.logo img {
