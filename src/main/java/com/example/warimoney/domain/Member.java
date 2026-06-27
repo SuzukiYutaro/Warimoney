@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -41,6 +42,7 @@ public class Member {
     private Long id;
 
     @Column(name = "member_name", nullable = false, length = 20)
+    @Size(max = 20)
     private String memberName;
 
     @ManyToOne(fetch = FetchType.LAZY)

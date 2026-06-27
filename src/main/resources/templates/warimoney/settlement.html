@@ -3,51 +3,141 @@
 
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>清算</title>
+
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/settlement.css}">
 </head>
 
-<h2 th:text="${project.projectName} + ' の精算結果'"></h2>
-<p>※割り切れなかった支払いは、余りの金額を1円単位で対象メンバーに順に分配しています。</p>
+<body>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>メンバー</th>
-            <th>支払額</th>
-			<th>負担額</th>
-            <th>差額</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="r : ${results}">
-            <td th:text="${r.memberName}"></td>
-            <td th:text="${r.paidAmount} + ' 円'"></td>
-            <td th:text="${r.shareAmount} + ' 円'"></td>
-            <td>
-                <span th:if="${r.balance > 0}" th:text="'+' + ${r.balance} + ' 円（受取）'" class="text-success"></span>
-                <span th:if="${r.balance < 0}" th:text="${r.balance} + ' 円（支払）'" class="text-danger"></span>
-                <span th:if="${r.balance == 0}">±0 円</span>
-            </td>
-        </tr>
-    </tbody>
-</table>
+	<div class="page">
 
-<h3>送金リスト</h3>
+		<div class="header">
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>支払う人</th>
-            <th>受け取る人</th>
-            <th>金額</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="t : ${transfers}">
-            <td th:text="${t.from}"></td>
-            <td th:text="${t.to}"></td>
-            <td th:text="${t.amount} + ' 円'"></td>
-        </tr>
-    </tbody>
-</table>
+			<div class="left-space">
+
+				<a th:href="@{'/projects/' + ${project.id}}" class="back-btn">
+					←
+				</a>
+
+				<div class="title">
+					<div class="page-title">SETTLEMENT</div>
+					<div class="page-subtitle">清算結果</div>
+				</div>
+
+			</div>
+
+			<div class="logo">
+				<img src="/img/warimoney_logo.png" alt="logo">
+			</div>
+
+		</div>
+
+
+		<div class="settlement-board">
+
+			<div class="project-header">
+				<div class="project-name" th:text="${project.projectName}">
+				</div>
+			</div>
+
+			<p class="notice">
+				※割り切れなかった支払いは、余りの金額を1円単位で対象メンバーに順に分配しています。
+			</p>
+
+			<div class="content-grid">
+
+				<section class="panel">
+
+					<div class="panel-title">
+						<h2>SUMMARY</h2>
+						<span>精算状況</span>
+					</div>
+
+					<div class="table-wrapper">
+
+						<table class="custom-table">
+
+							<thead>
+								<tr>
+									<th>名前</th>
+									<th>立替額</th>
+									<th>割り勘額</th>
+									<th>差額</th>
+								</tr>
+							</thead>
+
+							<tbody>
+
+								<tr th:each="r : ${results}">
+
+									<td th:text="${r.memberName}"></td>
+
+									<td th:text="${#numbers.formatInteger(r.paidAmount,0)} + '円'"></td>
+
+									<td th:text="${#numbers.formatInteger(r.shareAmount,0)} + '円'"></td>
+
+									<td>
+
+										<span th:if="${r.balance > 0}" class="plus" th:text="'+' + ${r.balance} + '円'">
+										</span>
+
+										<span th:if="${r.balance < 0}" class="minus" th:text="${r.balance} + '円'">
+										</span>
+
+										<span th:if="${r.balance == 0}">
+											±0円
+										</span>
+
+									</td>
+
+								</tr>
+
+							</tbody>
+
+						</table>
+
+					</div>
+
+				</section>
+
+
+				<section class="panel">
+
+					<div class="panel-title">
+						<h2>TRANSFER</h2>
+						<span>送金リスト</span>
+					</div>
+
+					<div class="transfer-list">
+
+						<div class="transfer-card" th:each="t : ${transfers}">
+
+							<div class="from" th:text="${t.from}">
+							</div>
+
+							<div class="arrow">
+								→
+							</div>
+
+							<div class="to" th:text="${t.to}">
+							</div>
+
+							<div class="amount" th:text="${t.amount} + '円'">
+							</div>
+
+						</div>
+
+					</div>
+
+				</section>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

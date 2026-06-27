@@ -4,12 +4,12 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	font-family: 'Bebas Neue', cursive;
 	transition: all 0.3s ease;
 }
 
 body {
 	background: #d5d5d5;
+	font-family: 'Bebas Neue', cursive;
 }
 
 .projects-page {
@@ -41,7 +41,7 @@ body {
 }
 
 .logo img {
-	width: 150px;
+	width: 100px;
 	height: auto;
 }
 
@@ -68,16 +68,16 @@ body {
 	flex-direction: column;
 	padding-bottom: 10px;
 	cursor: pointer;
-	
+
 	font-weight: bold;
 	text-align: center;
 }
 
 .project-card:hover {
-    background: #c0c0c0;
-	transform: translateY(-3px);
+	background: #c0c0c0;
+	transform: translateY(-1px);
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-	}
+}
 
 .project-name {
 	padding: 10px 5px 0;
@@ -101,7 +101,7 @@ body {
 }
 
 .btn-edit:hover {
-    border-color: white;
+	border-color: white;
 }
 
 .add-project-card {
@@ -114,11 +114,42 @@ body {
 }
 
 .add-project-card:hover {
-    background: #d5d5d5;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-    }
+	background: #d5d5d5;
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
 
 .logout-form {
 	margin-top: 20px;
+}
+
+@media(max-width:768px) {
+
+
+	.logo img {
+		width: 90px;
+	}
+
+	.page-title {
+		font-size: 35px;
+	}
+
+	.page-subtitle {
+		font-size: 10px;
+	}
+}
+
+@media(max-width:480px) {
+
+	.logo img {
+		width: 70px;
+	}
+
+	.page-title {
+		font-size: 28px;
+	}
+
+	.page-subtitle {
+		display: none;
+	}
 }

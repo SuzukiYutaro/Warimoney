@@ -30,10 +30,10 @@
 					<div class="project-name" th:text="${project.projectName}"></div>
 					<div class="project-info">
 						<div>
-							作成日時：<span th:text="${#temporals.format(project.createdAt, 'yyyy.MM/dd')}"></span>
+							作成日時：<span th:text="${#temporals.format(project.createdAt, 'yyyy.MM/dd HH:mm')}"></span>
 						</div>
 						<div class="mt-3">
-							更新日時：<span th:text="${#temporals.format(project.updatedAt,'yyyy.MM/dd')}"></span>
+							更新日時：<span th:text="${#temporals.format(project.updatedAt,'yyyy.MM/dd HH:mm')}"></span>
 						</div>
 					</div>
 					<button class="btn-edit" onclick="event.stopPropagation()" data-bs-toggle="modal"

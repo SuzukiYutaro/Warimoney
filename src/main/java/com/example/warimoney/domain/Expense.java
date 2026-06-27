@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -57,7 +58,8 @@ public class Expense {
     @Column(nullable = false)
     private BigDecimal amount;
 
-    @Column(length = 50)
+    @Column(length = 30)
+    @Size(max = 30)
     private String description;
 
     @Column(name = "created_at", updatable = false)

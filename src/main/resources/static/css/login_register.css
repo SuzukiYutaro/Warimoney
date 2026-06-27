@@ -4,11 +4,11 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	font-family: 'Bebas Neue', cursive;
 }
 
 body {
-	background: #d5d5d5
+	background: #d5d5d5;
+	font-family: 'Bebas Neue', cursive;
 }
 
 .page {
